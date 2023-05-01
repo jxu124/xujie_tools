@@ -81,7 +81,7 @@ ipd.Audio(wav, rate=rate)
 
 > pip3 install text_generation icetk cpm_kernels
 
-### Chatbot - chatgml(zh,en)
+### Chatbot - chatglm(zh,en)
 
 依赖：
 """bash
