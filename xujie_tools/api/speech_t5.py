@@ -47,7 +47,7 @@ if __name__ == "__main__":
     app = Flask(__name__)
 
     # 处理tts函数
-    @app.route(f"/{args.api_path}", methods=["POST"])
+    @app.route(args.api_path, methods=["POST"])
     def my_api_func():
         token = request.json.get("token")
         if token != args.token:
@@ -57,4 +57,12 @@ if __name__ == "__main__":
         mp3, rate = t5_tts.get_mp3(text, speecher_id)
         return jsonify({'mp3': mp3.decode('utf-8'), 'rate': rate})
 
-    app.run(host=args.host, port=args.port, debug=args.debug)
+    print("Service Ready.")
+    if args.debug:
+        # for debug
+        app.run(host=args.host, port=args.port, debug=args.debug)
+    else:
+        # for production deployment
+        from gevent import pywsgi
+        server = pywsgi.WSGIServer((args.host, args.port), app)
+        server.serve_forever()
