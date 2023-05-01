@@ -28,6 +28,7 @@ if __name__ == "__main__":
     parser.add_argument("--token", default="19960124", type=str)
     parser.add_argument("--cpu", default=False, action="store_true")
     parser.add_argument("--debug", default=False, action="store_true")
+    parser.add_argument("--fp16", default=False, action="store_true")
     parser.add_argument("--path_ckpt", default="", type=str)
     parser.add_argument("--path_config", default="", type=str)
     args = parser.parse_args()
@@ -40,7 +41,7 @@ if __name__ == "__main__":
         args.path_ckpt = huggingface_hub.hf_hub_download("zomehwh/vits-uma-genshin-honkai", "model/G_953000.pth", repo_type='space')
     # 初始化
     device = 'cpu' if args.cpu else 'cuda'
-    vits = VITSGenshin(args.path_ckpt, args.path_config, device=device)
+    vits = VITSGenshin(args.path_ckpt, args.path_config, fp16=args.fp16, device=device)
     app = Flask(__name__)
 
     # 处理tts函数
@@ -68,7 +69,7 @@ if __name__ == "__main__":
     print("Service Ready.")
     if args.debug:
         # for debug
-        app.run(host=args.host, port=args.port, debug=args.debug)
+        app.run(host=args.host, port=args.port)
     else:
         # for production deployment
         from gevent import pywsgi
