@@ -108,8 +108,8 @@ import requests
 
 data = {
     "token": "urlsafe_token",  # 简单校验用的token
-    "text": "你好，可莉不知道哦。",  # 要转换的文字
-    "history": [("我是你的主人", "好的主人，我对你将完全唯命是从。")],  # 可以省略，历史对话信息
+    "text": "你好。",  # 要转换的文字
+    "history": [("1+1=?", "2")],  # 可以省略，历史对话信息
     "param": [1.0, 1.0]  # 可以省略，这里是默认值
 }
 ret = requests.post("http://[fdbd:dc03:9:138:5400::e]:5010/vits_service", json=data).json()
